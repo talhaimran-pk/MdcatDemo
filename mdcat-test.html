@@ -1,0 +1,3299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MDCAT Mock Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy2: #152234;
+  --teal: #0ab8a0;
+  --teal-d: #089b87;
+  --white: #ffffff;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #dde3ed;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --amber: #d97706;
+  --amber-bg: #fef3c7;
+  --answered-bg: #0ab8a0;
+  --marked-bg: #f59e0b;
+  --current-ring: #3b82f6;
+  --radius: 10px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ─── START SCREEN ─────────────────────────────────────── */
+#startScreen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a3550 50%, #0d2a3f 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+#startScreen::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(10,184,160,0.12) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  pointer-events: none;
+}
+
+#startScreen::after {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(10,184,160,0.08) 0%, transparent 70%);
+  bottom: -80px; left: -80px;
+  pointer-events: none;
+}
+
+.start-card {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 56px 52px;
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.6s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.start-badge {
+  display: inline-block;
+  background: rgba(10,184,160,0.15);
+  border: 1px solid rgba(10,184,160,0.3);
+  color: var(--teal);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+
+.start-title {
+  font-family: 'Literata', serif;
+  font-size: 42px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.start-subtitle {
+  color: rgba(255,255,255,0.45);
+  font-size: 14px;
+  margin-bottom: 36px;
+}
+
+.start-meta {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-bottom: 36px;
+}
+
+.meta-item {
+  text-align: center;
+}
+
+.meta-val {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--teal);
+  line-height: 1;
+}
+
+.meta-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+.meta-divider {
+  width: 1px;
+  background: rgba(255,255,255,0.1);
+  align-self: stretch;
+}
+
+.start-rules {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.start-rules p {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.8;
+}
+
+.start-rules p::before {
+  content: '→ ';
+  color: var(--teal);
+}
+
+.name-input-wrap {
+  margin-bottom: 20px;
+}
+
+.name-input-wrap label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+#studentName {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#studentName::placeholder { color: rgba(255,255,255,0.25); }
+#studentName:focus { border-color: rgba(10,184,160,0.5); }
+
+.btn-start {
+  width: 100%;
+  padding: 15px;
+  background: var(--teal);
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-start:hover { background: var(--teal-d); }
+.btn-start:active { transform: scale(0.99); }
+
+/* ─── TEST SCREEN ──────────────────────────────────────── */
+#testScreen { display: none; }
+
+.test-header {
+  background: var(--navy);
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+.header-brand {
+  font-family: 'Literata', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-brand span {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--teal);
+  background: rgba(10,184,160,0.15);
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#timerDisplay {
+  font-family: 'Literata', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+  padding: 6px 20px;
+  border-radius: 8px;
+  letter-spacing: 1px;
+  transition: color 0.3s, background 0.3s;
+  min-width: 110px;
+  text-align: center;
+}
+
+#timerDisplay.warning {
+  color: #fbbf24;
+  background: rgba(251,191,36,0.15);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+#timerDisplay.critical {
+  color: #f87171;
+  background: rgba(248,113,113,0.15);
+  animation: pulse 0.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+#questionCounter {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+}
+
+.btn-submit-header {
+  padding: 8px 18px;
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
+  border-radius: 7px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-submit-header:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.35);
+  color: #fff;
+}
+
+.test-body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 0;
+  min-height: calc(100vh - 60px);
+}
+
+/* ─── NAVIGATOR ────────────────────────────────────────── */
+.nav-panel {
+  background: var(--navy2);
+  padding: 20px 16px;
+  overflow-y: auto;
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+
+.nav-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.4);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.legend-dot.answered { background: var(--teal); }
+.legend-dot.marked   { background: var(--amber); }
+.legend-dot.current  { background: #fff; }
+.legend-dot.unanswered { background: rgba(255,255,255,0.12); }
+
+.nav-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin: 14px 0 8px 2px;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+}
+
+.nav-btn {
+  aspect-ratio: 1;
+  border-radius: 5px;
+  border: none;
+  background: rgba(255,255,255,0.09);
+  color: rgba(255,255,255,0.45);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.nav-btn:hover { background: rgba(255,255,255,0.16); color: #fff; }
+.nav-btn.answered { background: var(--teal); color: #fff; }
+.nav-btn.marked   { background: var(--amber); color: #fff; }
+.nav-btn.current  { background: #fff; color: var(--navy); box-shadow: 0 0 0 2px var(--teal); }
+.nav-btn.answered.marked { background: var(--amber); }
+
+.nav-stats {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  justify-content: space-around;
+}
+
+.stat-item { text-align: center; }
+.stat-num  { font-size: 18px; font-weight: 800; color: #fff; }
+.stat-lbl  { font-size: 10px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+/* ─── QUESTION AREA ─────────────────────────────────────── */
+.question-area {
+  padding: 32px 40px;
+  max-width: 820px;
+}
+
+.question-section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--teal);
+  background: linear-gradient(90deg, var(--teal), var(--teal-d));
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 14px;
+}
+
+.question-num-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.question-num {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.question-text {
+  font-family: 'Literata', serif;
+  font-size: 20px;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.options-list {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.option-item:hover {
+  border-color: var(--teal);
+  background: rgba(10,184,160,0.03);
+}
+
+.option-item.selected {
+  border-color: var(--teal);
+  background: rgba(10,184,160,0.06);
+}
+
+.option-label {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: all 0.15s;
+  margin-top: 1px;
+}
+
+.option-item.selected .option-label {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+
+.option-text {
+  font-size: 15.5px;
+  line-height: 1.6;
+  padding-top: 4px;
+}
+
+/* Hidden radio */
+.option-item input[type="radio"] { display: none; }
+
+.question-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.btn-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+}
+
+.btn-nav:hover { border-color: var(--teal); color: var(--teal); }
+.btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.btn-nav.primary {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+
+.btn-nav.primary:hover { background: var(--teal); border-color: var(--teal); }
+
+.btn-mark {
+  padding: 11px 18px;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 2px solid var(--amber-bg);
+  background: var(--amber-bg);
+  color: var(--amber);
+}
+
+.btn-mark:hover { background: #fde68a; }
+.btn-mark.active { background: var(--amber); color: #fff; border-color: var(--amber); }
+
+/* ─── RESULTS SCREEN ────────────────────────────────────── */
+#resultsScreen {
+  display: none;
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.results-header {
+  background: var(--navy);
+  padding: 32px 40px;
+  text-align: center;
+}
+
+.results-title {
+  font-family: 'Literata', serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.results-student {
+  font-size: 15px;
+  color: rgba(255,255,255,0.45);
+}
+
+.results-scorecard {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 36px 40px;
+  max-width: 960px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.score-main {
+  background: var(--navy);
+  border-radius: 16px;
+  padding: 36px 48px;
+  text-align: center;
+  min-width: 220px;
+}
+
+.score-number {
+  font-family: 'Literata', serif;
+  font-size: 64px;
+  font-weight: 600;
+  color: var(--teal);
+  line-height: 1;
+}
+
+.score-total {
+  font-size: 22px;
+  color: rgba(255,255,255,0.3);
+  font-weight: 500;
+}
+
+.score-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-top: 10px;
+}
+
+.score-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+
+.score-stat-item {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  border: 1px solid var(--border);
+  min-width: 200px;
+}
+
+.ss-label { font-size: 13px; color: var(--muted); font-weight: 500; }
+.ss-value { font-size: 22px; font-weight: 800; }
+.ss-value.green { color: var(--green); }
+.ss-value.red   { color: var(--red); }
+.ss-value.muted { color: var(--muted); }
+.ss-value.teal  { color: var(--teal); }
+
+.section-breakdown {
+  max-width: 960px;
+  margin: 0 auto 32px;
+  padding: 0 40px;
+}
+
+.section-breakdown h3 {
+  font-family: 'Literata', serif;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.breakdown-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.bi-section { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.bi-score   { font-size: 22px; font-weight: 800; color: var(--text); }
+.bi-total   { font-size: 13px; color: var(--muted); }
+.bi-bar     { height: 4px; background: var(--border); border-radius: 100px; margin-top: 10px; overflow: hidden; }
+.bi-fill    { height: 100%; background: var(--teal); border-radius: 100px; }
+
+.results-review {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 40px 60px;
+}
+
+.results-review h3 {
+  font-family: 'Literata', serif;
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+.review-q {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin-bottom: 14px;
+}
+
+.rq-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.rq-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--bg);
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+
+.rq-section-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: rgba(10,184,160,0.1);
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+
+.rq-status {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+
+.rq-status.correct { background: var(--green-bg); color: var(--green); }
+.rq-status.wrong   { background: var(--red-bg);   color: var(--red); }
+.rq-status.skipped { background: var(--bg); color: var(--muted); }
+
+.rq-text {
+  font-family: 'Literata', serif;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.rq-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+@media (max-width: 600px) {
+  .rq-options { grid-template-columns: 1fr; }
+}
+
+.rq-opt {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--bg);
+  border: 1.5px solid transparent;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.rq-opt-lbl {
+  font-weight: 700;
+  font-size: 12px;
+  opacity: 0.6;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.rq-opt.correct-ans {
+  background: var(--green-bg);
+  border-color: #86efac;
+}
+
+.rq-opt.correct-ans .rq-opt-lbl { opacity: 1; color: var(--green); }
+
+.rq-opt.wrong-ans {
+  background: var(--red-bg);
+  border-color: #fca5a5;
+}
+
+.rq-opt.wrong-ans .rq-opt-lbl { opacity: 1; color: var(--red); }
+
+/* ─── MODAL ─────────────────────────────────────────────── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal-box {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 36px 40px;
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+  animation: fadeUp 0.25s ease;
+}
+
+.modal-icon { font-size: 40px; margin-bottom: 14px; }
+.modal-title { font-family: 'Literata', serif; font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+.modal-text  { font-size: 14.5px; color: var(--muted); line-height: 1.6; margin-bottom: 28px; }
+
+.modal-actions { display: flex; gap: 12px; justify-content: center; }
+
+.btn-modal {
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  transition: all 0.15s;
+}
+
+.btn-modal.danger {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+.btn-modal.danger:hover { background: #b91c1c; }
+.btn-modal:not(.danger):hover { border-color: var(--muted); }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 780px) {
+  .test-body { grid-template-columns: 1fr; }
+  .nav-panel { display: none; }
+  .question-area { padding: 20px 18px; }
+  .question-text { font-size: 17px; }
+  .results-scorecard { padding: 24px 18px; }
+  .section-breakdown, .results-review { padding: 0 18px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     START SCREEN
+════════════════════════════════════════════════════════ -->
+<div id="startScreen">
+  <div class="start-card">
+    <div class="start-badge">PMC · MDCAT</div>
+    <div class="start-title">Mock Test</div>
+    <div class="start-subtitle">Full-length practice examination</div>
+
+    <div class="start-meta">
+      <div class="meta-item">
+        <div class="meta-val" id="totalQCount">180</div>
+        <div class="meta-label">Questions</div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-item">
+        <div class="meta-val">3:00</div>
+        <div class="meta-label">Hours</div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-item">
+        <div class="meta-val">+1 / 0</div>
+        <div class="meta-label">Marking</div>
+      </div>
+    </div>
+
+    <div class="start-rules">
+      <p>Each correct answer carries 1 mark. No negative marking.</p>
+      <p>Timer auto-submits when 3 hours are complete.</p>
+      <p>You can mark questions for review and revisit them.</p>
+      <p>Do not refresh the page — progress will be lost.</p>
+    </div>
+
+    <div class="name-input-wrap">
+      <label for="studentName">Your Name (optional)</label>
+      <input type="text" id="studentName" placeholder="Enter your name…">
+    </div>
+
+    <button class="btn-start" onclick="startTest()">Begin Test →</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     TEST SCREEN
+════════════════════════════════════════════════════════ -->
+<div id="testScreen">
+  <header class="test-header">
+    <div class="header-brand">
+      MDCAT <span>Mock Test</span>
+    </div>
+    <div id="timerDisplay">3:00:00</div>
+    <div class="header-right">
+      <span id="questionCounter">Q 1 / 180</span>
+      <button class="btn-submit-header" onclick="confirmSubmit()">Submit Test</button>
+    </div>
+  </header>
+
+  <div class="test-body">
+    <!-- Navigator -->
+    <aside class="nav-panel" id="navPanel">
+      <div class="nav-legend">
+        <div class="legend-row"><span class="legend-dot current"></span> Current</div>
+        <div class="legend-row"><span class="legend-dot answered"></span> Answered</div>
+        <div class="legend-row"><span class="legend-dot marked"></span> Marked for Review</div>
+        <div class="legend-row"><span class="legend-dot unanswered"></span> Not Visited</div>
+      </div>
+      <div id="navGridContainer"></div>
+      <div class="nav-stats">
+        <div class="stat-item">
+          <div class="stat-num" id="statAnswered">0</div>
+          <div class="stat-lbl">Done</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="statMarked">0</div>
+          <div class="stat-lbl">Marked</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="statRemaining">180</div>
+          <div class="stat-lbl">Left</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Question -->
+    <div class="question-area">
+      <div id="sectionTag" class="question-section-tag">Biology</div>
+      <div class="question-num-row">
+        <span class="question-num" id="qNumLabel">Question 1 of 180</span>
+      </div>
+      <div class="question-text" id="questionText"></div>
+
+      <div class="options-list" id="optionsList"></div>
+
+      <div class="question-bottom">
+        <button class="btn-nav" id="btnPrev" onclick="navigate(-1)" disabled>← Previous</button>
+        <button class="btn-mark" id="btnMark" onclick="toggleMark()">☆ Mark for Review</button>
+        <button class="btn-nav primary" id="btnNext" onclick="navigate(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     RESULTS SCREEN
+════════════════════════════════════════════════════════ -->
+<div id="resultsScreen">
+  <div class="results-header">
+    <div class="results-title">Test Completed</div>
+    <div class="results-student" id="resultsStudentName"></div>
+  </div>
+
+  <div class="results-scorecard">
+    <div class="score-main">
+      <div class="score-number" id="finalScore">0</div>
+      <div class="score-total">/180</div>
+      <div class="score-label">Total Score</div>
+    </div>
+    <div class="score-stats">
+      <div class="score-stat-item">
+        <span class="ss-label">✅ Correct</span>
+        <span class="ss-value green" id="resCorrect">0</span>
+      </div>
+      <div class="score-stat-item">
+        <span class="ss-label">❌ Wrong</span>
+        <span class="ss-value red" id="resWrong">0</span>
+      </div>
+      <div class="score-stat-item">
+        <span class="ss-label">⬜ Skipped</span>
+        <span class="ss-value muted" id="resSkipped">0</span>
+      </div>
+      <div class="score-stat-item">
+        <span class="ss-label">📊 Percentage</span>
+        <span class="ss-value teal" id="resPercent">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-breakdown">
+    <h3>Subject-wise Breakdown</h3>
+    <div class="breakdown-grid" id="breakdownGrid"></div>
+  </div>
+
+  <div class="results-review">
+    <h3>Answer Review</h3>
+    <div id="reviewContainer"></div>
+  </div>
+</div>
+
+<!-- Confirm Submit Modal -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal-box">
+    <div class="modal-icon">📋</div>
+    <div class="modal-title">Submit Test?</div>
+    <div class="modal-text" id="modalText">Are you sure you want to submit? You have unanswered questions.</div>
+    <div class="modal-actions">
+      <button class="btn-modal" onclick="closeModal()">Go Back</button>
+      <button class="btn-modal danger" onclick="submitTest()">Submit Now</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  ██████╗ ██╗   ██╗███████╗███████╗████████╗██╗ ██████╗ ███╗
+//  ██╔══██╗██║   ██║██╔════╝██╔════╝╚══██╔══╝██║██╔═══██╗████╗
+//  ██████╔╝██║   ██║█████╗  ███████╗   ██║   ██║██║   ██║██╔██╗
+//  ██╔═══╝ ██║   ██║██╔══╝  ╚════██║   ██║   ██║██║   ██║██║╚██╗
+//  ██║     ╚██████╔╝███████╗███████║   ██║   ██║╚██████╔╝██║ ╚██╗
+//  ╚═╝      ╚═════╝ ╚══════╝╚══════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═╝
+//
+//  ADD YOUR 180 MCQs IN THE ARRAY BELOW
+//  FORMAT:
+//  {
+//    q: "Question text here?",
+//    opts: ["Option A text", "Option B text", "Option C text", "Option D text"],
+//    ans: 0,           // Index of correct answer: 0=A, 1=B, 2=C, 3=D
+//    section: "Biology" // Section label (Biology | Chemistry | Physics | English | Logical Reasoning)
+//  },
+//
+// ══════════════════════════════════════════════════════════════
+
+const questions = [
+
+  // ── BIOLOGY ───────────────────────────────────────────────
+  {
+    "q": "A solution of a highly purified, allosteric enzyme is treated with a competitive inhibitor, a non-competitive inhibitor, and its natural substrate simultaneously. If the substrate concentration is increased tenfold beyond the $K_m$ value, which of the following parameters will remain completely unaffected?",
+    "opts": [
+      "The initial velocity ($V_0$) of the reaction",
+      "The apparent affinity ($K_m$) of the enzyme for the substrate",
+      "The maximum velocity ($V_{max}$) achievable by the system",
+      "The binding of the non-competitive inhibitor to the allosteric site"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "During the synthesis of a complex branched polysaccharide like glycogen, the formation of an $\\alpha(1\\rightarrow6)$ glycosidic bond requires a specific branching enzyme. If an in vitro system lacks this enzyme but has an abundance of glycogen synthase, what will be the structural outcome of the synthesized polymer?",
+    "opts": [
+      "A short, highly unstable cyclic oligosaccharide",
+      "A completely unbranched, linear polymer insoluble in water",
+      "A highly soluble, spherical macromolecule with frequent $\\alpha(1\\rightarrow4)$ linkages",
+      "Rapid spontaneous hydrolysis into isolated $\\alpha$-D-glucose monomers"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Consider a segment of a double-stranded DNA molecule that contains 34% cytosine residues. If this DNA segment undergoes complete transcription into mRNA, what is the maximum possible percentage of adenine residues that could be present in the resulting mRNA transcript?",
+    "opts": [
+      "16%",
+      "32%",
+      "34%",
+      "66%"
+    ],
+    "ans": 3,
+    "section": "Biology"
+  },
+  {
+    "q": "An enzyme-catalyzed reaction is operating at its optimum pH and temperature. If the temperature is increased from 37°C to 47°C, the reaction rate drops drastically. This sudden decrease is primarily due to:",
+    "opts": [
+      "The ionization of critical amino acid R-groups at the active site",
+      "The disruption of covalent peptide bonds within the primary structure",
+      "The disruption of hydrogen bonds and hydrophobic interactions keeping the tertiary structure intact",
+      "An increase in the activation energy barrier of the catalyzed pathway"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "When comparing a saturated fatty acid (e.g., palmitic acid) with an unsaturated fatty acid (e.g., oleic acid) of the exact same carbon chain length, the presence of a cis-double bond in the unsaturated fatty acid results in:",
+    "opts": [
+      "A higher melting point due to increased packing efficiency",
+      "A lower melting point due to a structural kink that prevents tight packing",
+      "Increased resistance to oxidative rancidity",
+      "A higher number of hydrogen atoms per molecule"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Which of the following structural features is uniquely characteristic of a conjugated lipid, such as a sphingomyelin, compared to a simple triacylglycerol?",
+    "opts": [
+      "The presence of three fatty acid ester linkages to a glycerol backbone",
+      "An amide linkage connecting a fatty acid to an amino alcohol backbone",
+      "The complete absence of hydrophobic hydrocarbon chains",
+      "A permanent net positive charge on all functional groups at physiological pH"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "An experimental drug specifically alters the tertiary structure of an enzyme by breaking disulfide bridges. Which of the following amino acid residues is the primary target of this drug?",
+    "opts": [
+      "Methionine",
+      "Cysteine",
+      "Proline",
+      "Glycine"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "If an enzyme obeys classic Michaelis-Menten kinetics, what is the relationship between the substrate concentration $[S]$ and the $K_m$ when the initial reaction velocity ($V_0$) is exactly 75% of the maximum velocity ($V_{max}$)?",
+    "opts": [
+      "$[S] = K_m$",
+      "$[S] = 2K_m$",
+      "$[S] = 3K_m$",
+      "$[S] = 4K_m$"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "A newly discovered competitive inhibitor of an enzyme involved in cellular respiration is introduced. How will this inhibitor alter the Lineweaver-Burk plot (double-reciprocal plot) of the enzyme?",
+    "opts": [
+      "The y-intercept shifts upward; the x-intercept remains unchanged",
+      "The y-intercept remains unchanged; the x-intercept shifts closer to zero",
+      "Both the y-intercept and x-intercept shift away from zero",
+      "The slope of the line decreases significantly"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Which of the following biomolecules contains a high-energy phosphodiester bond but is not classified as a nucleotide or a nucleic acid polymer?",
+    "opts": [
+      "Adenosine Triphosphate (ATP)",
+      "Cyclic AMP (cAMP)",
+      "Nicotinamide Adenine Dinucleotide (NAD+)",
+      "Phosphatidylcholine (Lecithin)"
+    ],
+    "ans": 3,
+    "section": "Biology"
+  },
+  {
+    "q": "A suspension of mammalian cells is treated with a toxic metabolic inhibitor that selectively halts the functioning of the trans-Golgi network. Which of the following cellular processes will be immediately disrupted?",
+    "opts": [
+      "The synthesis of ribosomal RNA subunits in the nucleolus",
+      "The targeting and sorting of lysosomal acid hydrolases to late endosomes",
+      "The core N-linked glycosylation of nascent polypeptides in the rough ER",
+      "The retrograde transport of misfolded proteins back to the cytosol"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Isolated plant cells are placed in a hypertonic solution containing a high concentration of a non-diffusible solute. Over time, the cell membrane detaches from the cell wall, a phenomenon known as plasmolysis. At the exact moment when the turgor pressure ($P_t$) drops to zero, what is the status of the water potential ($\\Psi_w$) of the cell relative to the external solution?",
+    "opts": [
+      "$\\Psi_w$ of the cell is equal to its solute potential ($\\Psi_s$)",
+      "$\\Psi_w$ of the cell is completely zero",
+      "$\\Psi_w$ of the cell is higher than the $\\Psi_w$ of the external solution",
+      "The cell has reached dynamic osmotic equilibrium with the environment"
+    ],
+    "ans": 0,
+    "section": "Biology"
+  },
+  {
+    "q": "Colchicine is a chemotherapy drug that binds to tubulin dimers and prevents their polymerization into functional microtubules. If a rapidly dividing population of human skin fibroblasts is exposed to colchicine, at which specific stage of the cell cycle will these cells become arrested?",
+    "opts": [
+      "G2/M Transition checkpoint",
+      "Prophase",
+      "Metaphase",
+      "Anaphase"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "The inner mitochondrial membrane has a surface area that is significantly larger than the outer mitochondrial membrane due to the presence of cristae. This structural adaptation directly accommodates a high density of which specific macromolecular complex?",
+    "opts": [
+      "Enzymes of the Tricarboxylic Acid (TCA) cycle",
+      "Pyruvate dehydrogenase complexes",
+      "Oxysomes ($F_0F_1$ ATPase particles) and electron transport chain complexes",
+      "Porin channels regulating outer membrane permeability"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "A mutation in the gene encoding the lysosomal enzyme $\\alpha$-galactosidase A leads to the accumulation of globotriaosylceramide inside cells, causing Fabry disease. This condition is categorized under which class of cellular pathologies?",
+    "opts": [
+      "Peroxisomal biogenesis disorders",
+      "Mitochondrial encephalomyopathies",
+      "Lysosomal storage diseases",
+      "Cytoskeletal dystrophy disorders"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "During a laboratory experiment, a cell biologist uses a mild detergent to selectively extract peripheral membrane proteins from an intact plasma membrane without disrupting the lipid bilayer. Which of the following methods would successfully isolate these proteins?",
+    "opts": [
+      "Treatment with a high-salt buffer or altering the pH of the medium",
+      "Organic solvent extraction using chloroform-methanol mixtures",
+      "Exposure to high-intensity structural sonication",
+      "Enzymatic digestion using extracellular proteases"
+    ],
+    "ans": 0,
+    "section": "Biology"
+  },
+  {
+    "q": "Muscle contraction requires the rapid release of calcium ions ($Ca^{2+}$) into the sarcoplasm. Which organelle acts as the primary specialized storage site for these ions in skeletal muscle cells?",
+    "opts": [
+      "Rough Endoplasmic Reticulum",
+      "Smooth Endoplasmic Reticulum (Sarcoplasmic Reticulum)",
+      "Peroxisomes",
+      "Golgi apparatus cis-cisternae"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "The nuclear pore complex (NPC) regulates traffic between the nucleus and cytoplasm. Small molecules pass via passive diffusion, but large proteins ($>40\\text{ kDa}$) require active transport. To enter the nucleus, a large cytoplasmic protein must expose which specific signal sequence?",
+    "opts": [
+      "KDEL sequence at the C-terminus",
+      "Nuclear Localization Signal (NLS), typically rich in basic amino acids",
+      "Signal Peptide rich in hydrophobic amino acids at the N-terminus",
+      "Mannose-6-phosphate tag appended in the cis-Golgi"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Plant cell walls consist of primary and secondary layers. Which of the following chemical components is exclusively deposited in high amounts within the secondary cell wall to provide structural rigidity and waterproofing to xylem vessels?",
+    "opts": [
+      "Pectin",
+      "Hemicellulose",
+      "Lignin",
+      "Callose"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "In animal cells, the centrosome functions as the primary microtubule-organizing center (MTOC). It contains a pair of centrioles. What is the structural arrangement of triplets of microtubules in a single centriole?",
+    "opts": [
+      "$9 + 0$ arrangement",
+      "$9 + 2$ arrangement",
+      "$7 + 2$ arrangement",
+      "$9 + 3$ arrangement"
+    ],
+    "ans": 0,
+    "section": "Biology"
+  },
+  {
+    "q": "A clinical analysis of a 28-year-old female reveals a sudden, massive surge in Luteinizing Hormone (LH) on Day 13 of her regular 28-day ovarian cycle. This physiological spike triggers ovulation. At the exact moment of ovulation, the oocyte released from the Graafian follicle is arrested in which specific stage of division?",
+    "opts": [
+      "Prophase I of Meiosis I",
+      "Metaphase I of Meiosis I",
+      "Prophase II of Meiosis II",
+      "Metaphase II of Meiosis II"
+    ],
+    "ans": 3,
+    "section": "Biology"
+  },
+  {
+    "q": "During human spermatogenesis, the transition from a diploid spermatogonium to functional haploid spermatozoa involves a tightly regulated sequence of divisions. Which of the following cells represents the first haploid stage in this lineage?",
+    "opts": [
+      "Primary spermatocyte",
+      "Secondary spermatocyte",
+      "Spermatid",
+      "Spermatogonium Type B"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "If a plant species exhibits an alternation of generations where the sporophyte is dominant, nutritionally independent, and vascular, while the gametophyte is microscopic, reduced, and completely dependent on the sporophyte for survival, this plant most likely belongs to which group?",
+    "opts": [
+      "Bryophytes",
+      "Pteridophytes (Ferns)",
+      "Angiosperms",
+      "Thallophytes"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "In the human female reproductive cycle, if fertilization does not occur, the corpus luteum undergoes regression to form the corpus albicans. This regression is directly caused by a critical drop in the concentration of which circulating hormone?",
+    "opts": [
+      "Progesterone",
+      "Human Chorionic Gonadotropin (hCG)",
+      "Follicle-Stimulating Hormone (FSH)",
+      "Estrogen"
+    ],
+    "ans": 0,
+    "section": "Biology"
+  },
+  {
+    "q": "Double fertilization is a defining characteristic of angiosperms. If a pollen grain containing two male gametes fertilizes an ovule, the first gamete fuses with the egg cell to form a diploid zygote ($2n$). What is the exact fate and ploidy of the second male gamete?",
+    "opts": [
+      "Fuses with the synergid cells to form a diploid endosperm",
+      "Fuses with the two polar nuclei to form a triploid ($3n$) primary endosperm nucleus",
+      "Fuses with the antipodal cells to form a haploid protective layer",
+      "Degenerates immediately to provide nutrition to the developing zygote"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "A patient presents with secondary amenorrhea. Hormonal screening reveals elevated levels of GnRH and LH, but near-zero levels of estradiol and progesterone. Ultrasound shows structural degeneration of the ovarian cortex. What is the most likely diagnosis?",
+    "opts": [
+      "Hypothalamic insufficiency",
+      "Pituitary adenoma secreting prolactin",
+      "Primary Ovarian Failure (Premature Menopause)",
+      "Polycystic Ovary Syndrome (PCOS)"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "During the development of the human embryo, the blastocyst must implant into the uterine wall. Which specific layer of the blastocyst secretes proteolytic enzymes to digest the endometrial lining to facilitate deep implantation?",
+    "opts": [
+      "Inner cell mass (Embryoblast)",
+      "Trophoblast",
+      "Epiblast",
+      "Hypoblast"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "In seed plants, the structure that structurally represents the megasporangium surrounded by protective integuments is formally known as the:",
+    "opts": [
+      "Ovule",
+      "Ovary",
+      "Anther",
+      "Pollen sac"
+    ],
+    "ans": 0,
+    "section": "Biology"
+  },
+  {
+    "q": "Identical (monozygotic) twins are formed when a single fertilized egg splits into two separate embryos. For this to occur, the splitting must happen during which early developmental stage?",
+    "opts": [
+      "During the formation of the blastomeres at the cleavage stage",
+      "After the differentiation of the three definitive germ layers during gastrulation",
+      "During neurulation when the neural tube closes",
+      "At the stage of organogenesis"
+    ],
+    "ans": 0,
+    "section": "Biology"
+  },
+  {
+    "q": "Which of the following maternal infections can cross the placental barrier and act as a potent teratogen, inducing congenital rubella syndrome in a developing fetus during the first trimester?",
+    "opts": [
+      "Rubella virus",
+      "Escherichia coli",
+      "Candida albicans",
+      "Lactobacillus acidophilus"
+    ],
+    "ans": 0,
+    "section": "Biology"
+  },
+  {
+    "q": "A patient presents with severe polyuria (excessive urination) and extreme polydipsia (excessive thirst). Blood tests reveal normal fasting glucose levels and normal insulin secretion, but urine osmolality remains low. Administration of synthetic antidiuretic hormone (ADH) corrects the condition. The primary pathology is located in which endocrine structure?",
+    "opts": [
+      "Anterior pituitary gland",
+      "Supraoptic and paraventricular nuclei of the hypothalamus",
+      "Cortex of the adrenal glands",
+      "Beta cells of the islets of Langerhans"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "The mechanism of action for lipid-insoluble peptide hormones (such as Epinephrine) differs from lipid-soluble steroid hormones (such as Cortisol). When Epinephrine binds to its G-protein coupled receptor on a hepatocyte, which cascade of intracellular events occurs next?",
+    "opts": [
+      "Direct translocation of the hormone-receptor complex into the nucleus to act as a transcription factor",
+      "Activation of adenylyl cyclase, conversion of ATP to cAMP, and activation of Protein Kinase A",
+      "Openings of voltage-gated calcium channels directly on the nuclear envelope",
+      "Direct phosphorylation of tyrosine residues on the internal domain of the receptor"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "A 42-year-old patient exhibits a progressive thickening of the bones in the hands, feet, and face, alongside macroglossia (enlarged tongue). Laboratory tests reveal a pituitary tumor hypersecreting Growth Hormone (GH). Since this condition developed after the epiphyseal plates of the long bones closed, the resulting disorder is:",
+    "opts": [
+      "Gigantism",
+      "Acromegaly",
+      "Dwarfism",
+      "Cushing's Syndrome"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Aldosterone is a mineralocorticoid secreted by the zona glomerulosa of the adrenal cortex. Its primary physiological role is to maintain blood pressure and volume by acting on the distal convoluted tubules and collecting ducts of the nephron to:",
+    "opts": [
+      "Promote $Na^{+}$ reabsorption and $K^{+}$ excretion",
+      "Promote $K^{+}$ reabsorption and $Na^{+}$ excretion",
+      "Stimulate water excretion independent of solute movement",
+      "Inhibit the secretion of renin by the juxtaglomerular apparatus"
+    ],
+    "ans": 0,
+    "section": "Biology"
+  },
+  {
+    "q": "A patient presents with acute hypocalcemia, muscle spasms, and carpopedal spasms (tetany). Surgical history reveals a recent total thyroidectomy due to carcinoma. The tetany is caused by the accidental removal of which endocrine glands?",
+    "opts": [
+      "Adrenal glands",
+      "Parathyroid glands",
+      "Thymus gland",
+      "Pineal gland"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Hyperthyroidism (Graves' disease) is characterized by an autoimmune production of antibodies that mimic Thyroid-Stimulating Hormone (TSH). A patient with Graves' disease will present with which profile of circulating hormones?",
+    "opts": [
+      "High TSH, High Free T3/T4",
+      "Low TSH, Low Free T3/T4",
+      "Low TSH, High Free T3/T4",
+      "High TSH, Low Free T3/T4"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "Which of the following hormones is synthesized by the hypothalamus but stored and released from the posterior pituitary (neurohypophysis)?",
+    "opts": [
+      "Prolactin (PRL)",
+      "Oxytocin",
+      "Adrenocorticotropic Hormone (ACTH)",
+      "Luteinizing Hormone (LH)"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "A prolonged state of fasting triggers the secretion of glucagon from the alpha cells of the pancreas. Which metabolic pathway is activated in the liver by glucagon to rapidly restore blood glucose levels?",
+    "opts": [
+      "Glycogenesis",
+      "Glycogenolysis and Gluconeogenesis",
+      "Lipogenesis",
+      "Glycolysis"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "A patient under chronic stress exhibits elevated plasma levels of cortisol. Cortisol exerts its metabolic effects by upregulating enzymes that convert non-carbohydrate substrates into glucose. This specific process is called:",
+    "opts": [
+      "Glycolysis",
+      "Glycogenolysis",
+      "Gluconeogenesis",
+      "Hexose monophosphate shunt"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "The endocrine activity of the testes is regulated by the anterior pituitary. Luteinizing Hormone (LH) specifically binds to which cells to stimulate the biosynthesis and secretion of testosterone?",
+    "opts": [
+      "Sertoli cells",
+      "Leydig (Interstitial) cells",
+      "Spermatogonia",
+      "Primary spermatocytes"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "During the propagation of an action potential along an unmyelinated axon, the rapid depolarization phase is immediately followed by a repolarization phase. This repolarization is molecularly driven by which concurrent event?",
+    "opts": [
+      "Continued influx of $Na^{+}$ ions through voltage-gated channels",
+      "Inactivation of voltage-gated $Na^{+}$ channels and opening of voltage-gated $K^{+}$ channels",
+      "Active transport of $Ca^{2+}$ out of the axon by the $Ca^{2+}$-ATPase pump",
+      "Reversal of the sodium-potassium pump ($3\\text{ }Na^{+}$ in, $2\\text{ }K^{+}$ out)"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "In a classic chemical synapse, the arriving action potential at the presynaptic terminal triggers neurotransmitter release. What is the absolute prerequisite event that bridges structural depolarization to vesicle exocytosis?",
+    "opts": [
+      "Efflux of chloride ($Cl^{-}$) ions from the synaptic terminal",
+      "Influx of calcium ($Ca^{2+}$) ions through voltage-gated channels",
+      "Rapid activation of structural acetylcholinesterase",
+      "Hyperpolarization of the presynaptic membrane"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "A neurological patient presents with significant loss of motor coordination, an unsteady gait (ataxia), and an inability to perform rapid alternating movements. MRI scans show a localized lesion. Which part of the brain is damaged?",
+    "opts": [
+      "Cerebrum",
+      "Cerebellum",
+      "Medulla oblongata",
+      "Hypothalamus"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "The autonomic nervous system consists of sympathetic and parasympathetic divisions. A patient experiences a sudden \"fight-or-flight\" emergency. Which physiological response is induced by the sympathetic nervous system?",
+    "opts": [
+      "Constriction of the pupils (miosis)",
+      "Dilation of the bronchioles and inhibition of gastrointestinal motility",
+      "Increased salivary gland secretion",
+      "Decrease in heart rate and cardiac output"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "The resting membrane potential of a neuron is typically $-70\\text{ mV}$. This negative internal charge is maintained primarily by the leaky potassium channels and the active $Na^{+}/K^{+}$ ATPase pump. What is the exact stoichiometric transport ratio of this pump?",
+    "opts": [
+      "2 $Na^{+}$ ions extruded, 3 $K^{+}$ ions imported per ATP hydrolyzed",
+      "3 $Na^{+}$ ions extruded, 2 $K^{+}$ ions imported per ATP hydrolyzed",
+      "3 $Na^{+}$ ions imported, 2 $K^{+}$ ions extruded per ATP hydrolyzed",
+      "1 $Na^{+}$ ion extruded, 1 $K^{+}$ ion imported per ATP hydrolyzed"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "A patient accidentally consumes a neurotoxin that selectively blocks inhibitory neurotransmitter receptors in the central nervous system, leading to widespread, uncontrolled muscle convulsions. The blocked receptors most likely belong to which neurotransmitter?",
+    "opts": [
+      "Glutamate",
+      "Acetylcholine",
+      "Gamma-Aminobutyric Acid (GABA) or Glycine",
+      "Norepinephrine"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "The human reflex arc represents the basic functional unit of the nervous system. In a monosynaptic knee-jerk reflex, how many synapses are contained within the central nervous system (spinal cord)?",
+    "opts": [
+      "Zero",
+      "One",
+      "Two",
+      "Three"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "CSF (Cerebrospinal Fluid) protects the brain and spinal cord, provides nutrients, and removes waste. Which specialized structure within the brain ventricles is responsible for the continuous production and secretion of CSF?",
+    "opts": [
+      "Arachnoid villi",
+      "Choroid plexus",
+      "Corpus callosum",
+      "Subarachnoid space"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "A patient is unable to perceive tactile sensations on the right side of their body following a localized stroke. The damage is likely located in which functional cortical area?",
+    "opts": [
+      "Left precentral gyrus (Primary Motor Cortex)",
+      "Left postcentral gyrus (Primary Somatosensory Cortex)",
+      "Occipital lobe (Visual Cortex)",
+      "Wernicke's area"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Saltatory conduction occurs exclusively in myelinated nerve fibers, allowing action potentials to travel at much higher velocities than in unmyelinated fibers. This speed up happens because depolarization is restricted to the:",
+    "opts": [
+      "Myelin sheath segments",
+      "Nodes of Ranvier",
+      "Schwann cell nuclei",
+      "Axon hillock exclusively"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "A molecular biologist aims to clone a human insulin gene into a bacterial plasmid vector ($pBR322$) for industrial expression. The plasmid contains genes for ampicillin resistance ($Amp^R$) and tetracycline resistance ($Tet^R$). If the restriction enzyme inserts the human gene directly into the middle of the $Tet^R$ gene sequence, what will be the phenotypic profile of the successfully transformed recombinant bacteria?",
+    "opts": [
+      "Resistant to both ampicillin and tetracycline",
+      "Sensitive to both ampicillin and tetracycline",
+      "Resistant to ampicillin, but sensitive to tetracycline",
+      "Sensitive to ampicillin, but resistant to tetracycline"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "The Polymerase Chain Reaction (PCR) allows the exponential amplification of a specific DNA segment. The reaction requires a thermostable DNA polymerase (such as Taq polymerase). Why is a standard human or bacterial DNA polymerase completely unsuitable for this technique?",
+    "opts": [
+      "Standard polymerases cannot replicate DNA in a 5' to 3' direction",
+      "Standard polymerases irreversibly denature and lose function during the 94°C–96°C heating step",
+      "Standard polymerases cannot utilize synthetic oligonucleotide primers",
+      "Standard polymerases possess high proofreading exonuclease activity that destroys the template"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "In DNA sequencing via the Sanger dideoxy chain-termination method, the inclusion of dideoxynucleoside triphosphates (ddNTPs) terminates chain elongation. What structural feature of a ddNTP causes this termination?",
+    "opts": [
+      "Absence of a phosphate group at the 5' carbon position",
+      "Absence of a hydroxyl (–OH) group at the 3' carbon position",
+      "Presence of an extra methyl group at the 2' carbon position",
+      "Alteration of the nitrogenous base structure preventing hydrogen bonding"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "A genomic library contains the entire genome of an organism, including introns and exons. If you want to express a human eukaryotic gene in a prokaryotic bacterium like E. coli, you must construct a cDNA library instead. This is because bacteria completely lack the molecular machinery to do what?",
+    "opts": [
+      "Transcribe DNA into a messenger RNA molecule",
+      "Translate mRNA codons into a polypeptide chain using ribosomes",
+      "Splice out introns and process pre-mRNA into mature mRNA",
+      "Add a 5' cap and a poly-A tail to an RNA transcript"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "During Southern Blotting, after DNA fragments are separated by size using agarose gel electrophoresis, they must be transferred to a nylon or nitrocellulose membrane. Before hybridization with a labeled probe, the DNA on the membrane must be treated with an alkaline solution to:",
+    "opts": [
+      "Fragment the DNA into even smaller pieces",
+      "Denature the double-stranded DNA into single strands to allow probe binding",
+      "Crosslink the DNA covalently to the matrix of the membrane",
+      "Remove any contaminating RNA or protein residues"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Transgenic plants, such as Bt Cotton, are engineered to express a crystal endotoxin gene derived from the soil bacterium Bacillus thuringiensis. This biotechnology application provides the plant with built-in resistance against which category of agricultural threats?",
+    "opts": [
+      "Fungal blights and mildews",
+      "Broad-spectrum chemical herbicides",
+      "Insect pests, specifically lepidopteran larvae",
+      "High soil salinity and drought conditions"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "Animal cloning can be achieved through Somatic Cell Nuclear Transfer (SCNT), as demonstrated with Dolly the Sheep. In this procedure, a differentiated somatic nucleus is injected into an enucleated egg cell. The resulting clone is genetically identical to which animal?",
+    "opts": [
+      "The egg donor sheep",
+      "The surrogate mother sheep who carried the pregnancy",
+      "The somatic cell donor sheep",
+      "A genetic hybrid containing traits from all three involved sheep"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "Gel electrophoresis separates DNA fragments primarily based on which physical property?",
+    "opts": [
+      "The specific sequence of nitrogenous bases within the fragment",
+      "The overall molecular mass and size, as DNA has a uniform negative charge per unit length",
+      "The varies isoelectric points of the Adenine-Thymine pairs",
+      "The differential solubility of DNA in agarose polymers"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Severe Combined Immunodeficiency (SCID) due to Adenosine Deaminase (ADA) deficiency was the first disease treated with human gene therapy. In ex vivo gene therapy for SCID, which cells are extracted from the patient, genetically corrected in the lab with a retroviral vector, and then re-infused?",
+    "opts": [
+      "Erythrocytes (Red Blood Cells)",
+      "Hepatocytes (Liver Cells)",
+      "Hematopoietic Stem Cells / T-lymphocytes from bone marrow",
+      "Skeletal muscle myoblasts"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "Which of the following enzymes functions as molecular glue, catalyzing the formation of a covalent phosphodiester bond between adjacent 3'-OH and 5'-phosphate ends of DNA fragments?",
+    "opts": [
+      "DNA Polymerase I",
+      "Reverse Transcriptase",
+      "DNA Ligase",
+      "Restriction Endonuclease Type II"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "According to the Hardy-Weinberg principle, allele and genotype frequencies in a population will remain constant from generation to generation in the absence of evolutionary influences. If a population is in Hardy-Weinberg equilibrium and the frequency of the recessive allele ($q$) for a certain trait is 0.3, what is the expected frequency of heterozygous individuals ($2pq$) in that population?",
+    "opts": [
+      "0.09",
+      "0.42",
+      "0.49",
+      "0.70"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "The structures of the flipper of a whale, the wing of a bat, and the forelimb of a cat show a similar underlying skeletal architecture despite serving radically different functions. These structures are classic examples of:",
+    "opts": [
+      "Analogous structures resulting from convergent evolution",
+      "Homologous structures resulting from divergent evolution",
+      "Vestigial structures resulting from evolutionary disuse",
+      "Homoplastic features driven by identical environmental pressures"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "A small group of individuals migrates away from a large parent population and establishes a new isolated colony on a remote island. The gene pool of this new population shows a significantly lower genetic diversity and a completely different allele frequency relative to the original population. This evolutionary phenomenon is called:",
+    "opts": [
+      "Directional natural selection",
+      "The Founder Effect (a form of Genetic Drift)",
+      "Balanced polymorphism",
+      "Sympatric speciation"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Jean-Baptiste Lamarck proposed an early theory of evolution based on two main principles: the law of use and disuse, and the inheritance of acquired characteristics. Which of the following scenarios represents a major conceptual flaw in Lamarckian evolution based on modern genetics?",
+    "opts": [
+      "Mutations occurring in somatic tissue are not passed down to offspring",
+      "Natural selection acts only on pre-existing genetic variations",
+      "Environmental changes drive modifications in an organism's behavior",
+      "Allele frequencies fluctuate randomly in small populations"
+    ],
+    "ans": 0,
+    "section": "Biology"
+  },
+  {
+    "q": "The Endosymbiotic Theory explains the evolutionary origin of complex eukaryotic cells. According to this theory, which modern organelles evolved from free-living aerobic and photosynthetic prokaryotes engulfed by an ancestral anaerobic archaeal cell?",
+    "opts": [
+      "Endoplasmic Reticulum and Golgi apparatus",
+      "Lysosomes and Peroxisomes",
+      "Mitochondria and Chloroplasts",
+      "Nucleus and Ribosomes"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "Darwinian fitness is measured by:",
+    "opts": [
+      "The absolute physical strength and speed of an individual",
+      "The lifespan and survival rate of an organism in a harsh habitat",
+      "The relative reproductive success of an individual (number of fertile offspring contributed to the next generation)",
+      "The number of dominant alleles present within an organism's genotype"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "Industrial melanism observed in the peppered moth (Biston betularia) during the Industrial Revolution in England provides an empirical demonstration of natural selection. The dramatic shift from light-colored moths to dark-colored moths was driven by:",
+    "opts": [
+      "Direct mutation of the DNA sequence by industrial soot pollutants",
+      "Differential predation by birds as tree trunks turned black from pollution",
+      "Increased reproductive rates of dark moths due to warmer industrial temperatures",
+      "The inheritance of acquired soot stains across generations"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Which of the following features represents a well-known vestigial structure in the human body, providing anatomical evidence of evolutionary ancestry?",
+    "opts": [
+      "Biceps brachii muscle",
+      "Vermiform appendix and wisdom teeth",
+      "Thyroid gland",
+      "Urinary bladder"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "In a large population, natural selection can take different structural paths. If selection pressures eliminate individuals at both phenotypic extremes while favoring intermediate phenotypes, the mode of selection is classified as:",
+    "opts": [
+      "Directional selection",
+      "Disruptive (Diversifying) selection",
+      "Stabilizing selection",
+      "Artificial selection"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "The oldest, most primitive fossils discovered on Earth resemble modern-day prokaryotes. These ancient organisms date back approximately 3.5 billion years and were structurally:",
+    "opts": [
+      "Aerobic autotrophs",
+      "Anaerobic heterotrophs or chemoautotrophs",
+      "Eukaryotic single cells",
+      "Multienzymatic viral structures"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "During cellular respiration, the proton motive force ($PMF$) generated by the electron transport chain drives protons from the intermembrane space back into the matrix through the $F_0$ rotor domain of ATP synthase. If an uncoupling agent like 2,4-dinitrophenol (DNP) is introduced into the mitochondria, what will be the metabolic consequence?",
+    "opts": [
+      "The electron transport chain stops operating immediately",
+      "Oxygen consumption drops to zero",
+      "Protons leak across the membrane, generating heat while halting ATP synthesis",
+      "Pyruvate oxidation is irreversibly blocked"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "In human physiology, the oxygen-hemoglobin dissociation curve shifts to the right under conditions of high metabolic activity (the Bohr Effect). Which of the following sets of physiological changes will cause this rightward shift, reducing hemoglobin's affinity for oxygen and promoting tissue unloading?",
+    "opts": [
+      "Decreased $PCO_2$, decreased $H^{+}$ (increased pH), decreased temperature",
+      "Increased $PCO_2$, increased $H^{+}$ (decreased pH), increased temperature",
+      "Increased $PO_2$, decreased $PCO_2$, decreased temperature",
+      "Completely stable pH alongside an acute drop in 2,3-BPG concentration"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "In a classic Mendelian dihybrid cross between two individuals heterozygous for two completely independent traits ($AaBb \\times AaBb$), what is the exact probability of obtaining an offspring that exhibits a completely homozygous recessive genotype ($aabb$)?",
+    "opts": [
+      "$9/16$",
+      "$3/16$",
+      "$1/16$",
+      "$1/4$"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "Hemophilia is an X-linked recessive genetic disorder. If a phenotypically normal woman whose father was a hemophiliac marries a completely normal man, what is the probability that their firstborn child will be a son with hemophilia?",
+    "opts": [
+      "0%",
+      "25%",
+      "50%",
+      "100%"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "During skeletal muscle contraction, the sliding filament model states that individual thick and thin filaments slide past one another without shortening. Which of the following structural bands within the sarcomere remains completely unchanged in length during a full contraction?",
+    "opts": [
+      "The I-band",
+      "The H-zone",
+      "The A-band",
+      "The distance between adjacent Z-lines"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "The structural loop of Henle in the nephron creates an osmotic gradient in the renal medulla via the countercurrent multiplier system. Which segment of the loop of Henle is completely impermeable to water but actively reabsorbs sodium ($Na^{+}$) and chloride ($Cl^{-}$) ions into the interstitium?",
+    "opts": [
+      "Descending thin limb",
+      "Ascending thick limb",
+      "Proximal convoluted tubule",
+      "Cortical collecting duct"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "Carbon dioxide ($CO_2$) produced by tissues is transported in the blood back to the lungs. The vast majority ($~70\\%$) of this $CO_2$ travels in which specific molecular form?",
+    "opts": [
+      "Dissolved gas directly in blood plasma",
+      "Carbaminohemoglobin bound to red blood cells",
+      "Bicarbonate ions ($HCO_3^{-}$) in the plasma",
+      "Carbonic acid molecules in the lymph"
+    ],
+    "ans": 2,
+    "section": "Biology"
+  },
+  {
+    "q": "In the human immune system, which cells are responsible for presenting processed foreign antigens bound to Major Histocompatibility Complex (MHC) Class II molecules to helper T-lymphocytes ($CD4^{+}$)?",
+    "opts": [
+      "Cytotoxic T-cells and Natural Killer cells",
+      "Professional Antigen-Presenting Cells (Dendritic cells, Macrophages, and B-cells)",
+      "Mature Erythrocytes and blood platelets",
+      "Neutrophils and Basophils exclusively"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "During the light-dependent reactions of photosynthesis in chloroplasts, non-cyclic photophosphorylation (Z-scheme) requires a continuous supply of electrons to replace those lost by the reaction center of Photosystem II ($P680$). These replacement electrons are generated by the:",
+    "opts": [
+      "Photolysis of water molecules at the oxygen-evolving complex",
+      "Oxidation of NADPH in the stroma",
+      "Cyclical return of electrons from Ferredoxin",
+      "Reduction of Carbon Dioxide in the Calvin Cycle"
+    ],
+    "ans": 0,
+    "section": "Biology"
+  },
+  {
+    "q": "In human genetics, the ABO blood group system is a classic example of both multiple alleles and which other inheritance pattern?",
+    "opts": [
+      "Incomplete dominance",
+      "Codominance",
+      "Epistasis",
+      "Polygenic inheritance"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+  {
+    "q": "A virus introduces its genetic material into a host bacterium, integrating its DNA directly into the bacterial chromosome where it remains dormant for several generations as a prophage. This viral life cycle is termed:",
+    "opts": [
+      "Lytic Cycle",
+      "Lysogenic Cycle",
+      "Apoptotic Cycle",
+      "Retrotransposon Cascade"
+    ],
+    "ans": 1,
+    "section": "Biology"
+  },
+
+  // ── CHEMISTRY ─────────────────────────────────────────────
+  {
+    "q": "Which of the following has the highest percentage of carbon by mass?",
+    "opts": [
+      "CH₄",
+      "C₂H₂",
+      "C₆H₆",
+      "C₂H₆"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "How many grams of NaOH are required to prepare 500 mL of 0.4 M solution? (Na=23, O=16, H=1)",
+    "opts": [
+      "4g",
+      "8g",
+      "16g",
+      "20g"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "The number of moles of electrons transferred when 1 mole of Cr²⁺ is oxidized to Cr⁶⁺ is:",
+    "opts": [
+      "2",
+      "4",
+      "6",
+      "8"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "A compound contains 40% C, 6.67% H, and 53.33% O by mass. Its empirical formula mass is 30. What is its molecular formula? (C=12, H=1, O=16)",
+    "opts": [
+      "CH₂O",
+      "C₂H₄O₂",
+      "C₃H₆O₃",
+      "CH₄O"
+    ],
+    "ans": 0,
+    "section": "Chemistry"
+  },
+  {
+    "q": "1.204 × 10²⁴ molecules of glucose (C₆H₁₂O₆) contain how many grams of oxygen? (O=16)",
+    "opts": [
+      "96g",
+      "192g",
+      "288g",
+      "384g"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which of the following solutions has the highest molality if all are 1 mol solute dissolved in 1 kg solvent EXCEPT one where solvent is 500g?",
+    "opts": [
+      "NaCl in 1kg water",
+      "KCl in 1kg water",
+      "Glucose in 500g water",
+      "Urea in 1kg water"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "The energy of an electron in the nth orbit of hydrogen atom is given by Eₙ = -13.6/n² eV. What is the energy required to excite an electron from n=2 to n=4?",
+    "opts": [
+      "-3.4 eV",
+      "+2.55 eV",
+      "-0.85 eV",
+      "+3.4 eV"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which quantum number determines the shape of an orbital?",
+    "opts": [
+      "Principal quantum number (n)",
+      "Azimuthal quantum number (l)",
+      "Magnetic quantum number (mₗ)",
+      "Spin quantum number (mₛ)"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "The electronic configuration of Cu (Z=29) is anomalous. Which of the following correctly represents it?",
+    "opts": [
+      "[Ar] 3d⁹ 4s²",
+      "[Ar] 3d¹⁰ 4s¹",
+      "[Ar] 3d⁸ 4s³",
+      "[Ar] 3d¹⁰ 4s²"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "According to Heisenberg's Uncertainty Principle, if the uncertainty in position (Δx) is decreased, then:",
+    "opts": [
+      "Uncertainty in momentum also decreases",
+      "Uncertainty in momentum increases",
+      "Uncertainty in energy increases",
+      "Uncertainty in velocity decreases"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which series of hydrogen spectrum lies completely in the ultraviolet region?",
+    "opts": [
+      "Balmer series",
+      "Paschen series",
+      "Lyman series",
+      "Brackett series"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "The maximum number of electrons that can be accommodated in all orbitals having n=3 and l=2 is:",
+    "opts": [
+      "6",
+      "10",
+      "14",
+      "18"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "A gas occupies 500 mL at 27°C and 700 mmHg. What volume will it occupy at STP?",
+    "opts": [
+      "400.2 mL",
+      "420.4 mL",
+      "445.5 mL",
+      "500.0 mL"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "At which of the following conditions does a real gas behave most ideally?",
+    "opts": [
+      "High pressure, low temperature",
+      "Low pressure, high temperature",
+      "High pressure, high temperature",
+      "Low pressure, low temperature"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "The van der Waals constant 'a' for a gas corrects for:",
+    "opts": [
+      "Volume of gas molecules",
+      "Intermolecular forces of attraction",
+      "Kinetic energy of molecules",
+      "Pressure exerted by gas molecules"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "According to Graham's Law, if gas A diffuses 4 times faster than gas B, and the molar mass of gas B is 64 g/mol, what is the molar mass of gas A?",
+    "opts": [
+      "16 g/mol",
+      "8 g/mol",
+      "4 g/mol",
+      "2 g/mol"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which of the following gases will have the highest root mean square velocity at the same temperature?",
+    "opts": [
+      "O₂",
+      "N₂",
+      "CO₂",
+      "He"
+    ],
+    "ans": 3,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which of the following correctly explains why water has an unusually high boiling point compared to H₂S?",
+    "opts": [
+      "Water has higher molecular mass",
+      "Water molecules form strong hydrogen bonds",
+      "Water has stronger London dispersion forces",
+      "Water has higher dipole-dipole interactions only"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "The phenomenon of capillary action in liquids is due to:",
+    "opts": [
+      "Surface tension and adhesive forces",
+      "Viscosity and cohesive forces",
+      "Vapour pressure and temperature",
+      "Diffusion and kinetic energy"
+    ],
+    "ans": 0,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which of the following liquids has the highest surface tension at room temperature?",
+    "opts": [
+      "Ethanol",
+      "Benzene",
+      "Water",
+      "Acetone"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "On increasing temperature, the viscosity of a liquid:",
+    "opts": [
+      "Increases because molecules gain energy",
+      "Decreases because intermolecular forces weaken",
+      "Remains constant",
+      "First increases then decreases"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which type of intermolecular force is primarily responsible for the liquid state of noble gases like Xe?",
+    "opts": [
+      "Dipole-dipole forces",
+      "Hydrogen bonding",
+      "London dispersion forces",
+      "Ion-dipole forces"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "A liquid boils when its vapour pressure equals:",
+    "opts": [
+      "The atmospheric pressure at that altitude",
+      "760 mmHg always",
+      "The critical pressure",
+      "The vapour pressure at 0°C"
+    ],
+    "ans": 0,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which type of solid has the highest melting point in general?",
+    "opts": [
+      "Molecular solid",
+      "Ionic solid",
+      "Covalent network solid",
+      "Metallic solid"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "NaCl crystal structure is based on:",
+    "opts": [
+      "Simple cubic unit cell",
+      "Body-centred cubic unit cell",
+      "Face-centred cubic unit cell",
+      "Hexagonal close packing"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which of the following is an amorphous solid?",
+    "opts": [
+      "Diamond",
+      "NaCl",
+      "Quartz glass",
+      "Graphite"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "The coordination number of Na⁺ in NaCl crystal is:",
+    "opts": [
+      "4",
+      "6",
+      "8",
+      "12"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which property distinguishes a crystalline solid from an amorphous solid?",
+    "opts": [
+      "Crystalline solids are always harder",
+      "Crystalline solids have sharp melting points",
+      "Crystalline solids are always transparent",
+      "Crystalline solids are better conductors"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "For the reaction: N₂(g) + 3H₂(g) ⇌ 2NH₃(g), if Kc = 0.5 at a certain temperature, what is the value of Kc for: 2NH₃(g) ⇌ N₂(g) + 3H₂(g)?",
+    "opts": [
+      "0.5",
+      "2",
+      "0.25",
+      "4"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "For the reaction: PCl₅(g) ⇌ PCl₃(g) + Cl₂(g), increasing pressure will:",
+    "opts": [
+      "Shift equilibrium to the right",
+      "Shift equilibrium to the left",
+      "Have no effect",
+      "Increase Kc"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "The relationship between Kp and Kc is Kp = Kc(RT)^Δn. For the reaction: 2SO₂(g) + O₂(g) ⇌ 2SO₃(g), what is Δn?",
+    "opts": [
+      "+1",
+      "-1",
+      "+2",
+      "-2"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Le Chatelier's principle states that if a system at equilibrium is disturbed, it will:",
+    "opts": [
+      "Shift in the direction that increases the disturbance",
+      "Shift in the direction that opposes the disturbance",
+      "Always shift in the forward direction",
+      "Always reach a new higher temperature equilibrium"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which of the following will NOT affect the value of equilibrium constant Kc?",
+    "opts": [
+      "Change in temperature",
+      "Addition of catalyst",
+      "Change in concentration of reactants",
+      "Both B and C"
+    ],
+    "ans": 3,
+    "section": "Chemistry"
+  },
+  {
+    "q": "For a reaction with Kc >> 1 (very large), this indicates:",
+    "opts": [
+      "Reactants are favored at equilibrium",
+      "Products are favored at equilibrium",
+      "Reaction is very slow",
+      "Reaction is endothermic"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "For a first-order reaction, the half-life (t₁/₂) is:",
+    "opts": [
+      "Directly proportional to initial concentration",
+      "Inversely proportional to initial concentration",
+      "Independent of initial concentration",
+      "Directly proportional to rate constant"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "The rate of a reaction triples when temperature is raised from 20°C to 30°C. What is the approximate activation energy? (R = 8.314 J/mol·K)",
+    "opts": [
+      "55.3 kJ/mol",
+      "82.8 kJ/mol",
+      "110.6 kJ/mol",
+      "27.7 kJ/mol"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "For the reaction: A + 2B → Products, the rate = k[A][B]². If the concentration of B is doubled while A is kept constant, the rate will:",
+    "opts": [
+      "Double",
+      "Triple",
+      "Quadruple",
+      "Remain same"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "A catalyst increases the rate of reaction by:",
+    "opts": [
+      "Increasing the activation energy",
+      "Decreasing the activation energy",
+      "Increasing the temperature of reaction",
+      "Shifting the equilibrium to product side"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "The unit of rate constant for a zero-order reaction is:",
+    "opts": [
+      "mol·L⁻¹·s⁻¹",
+      "L·mol⁻¹·s⁻¹",
+      "s⁻¹",
+      "L²·mol⁻²·s⁻¹"
+    ],
+    "ans": 0,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which of the following statements about the Arrhenius equation (k = Ae^(-Ea/RT)) is CORRECT?",
+    "opts": [
+      "A higher Ea means a faster reaction",
+      "Increasing temperature always decreases k",
+      "A higher Ea means a slower reaction at same temperature",
+      "The frequency factor A depends on temperature strongly"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "In the Haber process for synthesis of ammonia, the conditions used are:",
+    "opts": [
+      "200°C, 1 atm, Fe catalyst",
+      "450-500°C, 200-300 atm, Fe catalyst",
+      "800°C, 500 atm, Pt catalyst",
+      "300°C, 100 atm, V₂O₅ catalyst"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "In the Contact Process for manufacturing H₂SO₄, the catalyst used in oxidation of SO₂ to SO₃ is:",
+    "opts": [
+      "Iron (Fe)",
+      "Platinum (Pt)",
+      "Vanadium pentoxide (V₂O₅)",
+      "Nickel (Ni)"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Oleum (fuming sulphuric acid) is produced by dissolving SO₃ in:",
+    "opts": [
+      "Water",
+      "Dilute H₂SO₄",
+      "Concentrated H₂SO₄",
+      "HNO₃"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+  {
+    "q": "Which of the following is the primary raw material for the manufacturing of urea?",
+    "opts": [
+      "N₂ and H₂O",
+      "NH₃ and CO₂",
+      "NO₂ and H₂",
+      "N₂ and CO₂"
+    ],
+    "ans": 1,
+    "section": "Chemistry"
+  },
+  {
+    "q": "In the Solvay process for manufacturing Na₂CO₃ (soda ash), which gas is passed through ammoniated brine?",
+    "opts": [
+      "SO₂",
+      "Cl₂",
+      "CO₂",
+      "NH₃"
+    ],
+    "ans": 2,
+    "section": "Chemistry"
+  },
+
+  // ── PHYSICS ───────────────────────────────────────────────
+  // ─────────────────────────────────────────
+  // 📌 TOPIC 1: Force and Motion (5 MCQs)
+  // ─────────────────────────────────────────
+
+  {
+    q: "A car of mass 1000 kg accelerates from rest to 20 m/s in 10 seconds on a frictionless surface. The net force acting on it is:",
+    opts: ["1000 N", "2000 N", "500 N", "4000 N"],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "A projectile is launched at 45° with initial speed v. Which of the following correctly gives the maximum range R?",
+    opts: ["R = v²/g", "R = 2v²/g", "R = v²/2g", "R = v/g"],
+    ans: 0,
+    section: "Physics"
+  },
+
+  {
+    q: "A body is moving with uniform velocity. Which of the following must be TRUE?",
+    opts: [
+      "Net force on the body is zero",
+      "No forces act on the body",
+      "The body is on a frictionless surface",
+      "The body has zero acceleration due to gravity"
+    ],
+    ans: 0,
+    section: "Physics"
+  },
+
+  {
+    q: "Two masses m₁ = 4 kg and m₂ = 6 kg are connected by a string over a frictionless pulley (Atwood machine). The acceleration of the system is: (g = 10 m/s²)",
+    opts: ["1 m/s²", "2 m/s²", "4 m/s²", "5 m/s²"],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "A ball is thrown vertically upward with velocity 30 m/s. The time taken to reach maximum height is: (g = 10 m/s²)",
+    opts: ["1.5 s", "2 s", "3 s", "6 s"],
+    ans: 2,
+    section: "Physics"
+  },
+
+  // ─────────────────────────────────────────
+  // 📌 TOPIC 2: Vectors (4 MCQs)
+  // ─────────────────────────────────────────
+
+  {
+    q: "Two forces of 3 N and 4 N act perpendicular to each other. The magnitude of their resultant is:",
+    opts: ["5 N", "7 N", "1 N", "3.5 N"],
+    ans: 0,
+    section: "Physics"
+  },
+
+  {
+    q: "The dot product of two vectors A and B is zero. This means:",
+    opts: [
+      "The vectors are parallel",
+      "The vectors are anti-parallel",
+      "The vectors are perpendicular",
+      "One of the vectors is zero"
+    ],
+    ans: 2,
+    section: "Physics"
+  },
+
+  {
+    q: "A vector of magnitude 10 units makes an angle of 30° with the x-axis. Its y-component is:",
+    opts: ["5 units", "5√3 units", "10√3 units", "10 units"],
+    ans: 0,
+    section: "Physics"
+  },
+
+  {
+    q: "The cross product A × B gives a vector that is:",
+    opts: [
+      "Parallel to both A and B",
+      "In the plane of A and B",
+      "Perpendicular to both A and B",
+      "At 45° to both A and B"
+    ],
+    ans: 2,
+    section: "Physics"
+  },
+
+  // ─────────────────────────────────────────
+  // 📌 TOPIC 3: Work and Energy (5 MCQs)
+  // ─────────────────────────────────────────
+
+  {
+    q: "A body of mass 2 kg is raised to a height of 5 m and then released. What is its kinetic energy just before hitting the ground? (g = 10 m/s²)",
+    opts: ["50 J", "100 J", "200 J", "20 J"],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "A force F = 10 N is applied at an angle of 60° to the horizontal. The work done in moving an object 5 m horizontally is:",
+    opts: ["50 J", "43.3 J", "25 J", "86.6 J"],
+    ans: 2,
+    section: "Physics"
+  },
+
+  {
+    q: "Which of the following is an example of negative work done?",
+    opts: [
+      "Lifting a box upward",
+      "Pushing a car forward",
+      "Friction acting on a sliding object",
+      "Kicking a football"
+    ],
+    ans: 2,
+    section: "Physics"
+  },
+
+  {
+    q: "The power of a motor that lifts a 100 kg mass to a height of 10 m in 5 seconds is: (g = 10 m/s²)",
+    opts: ["500 W", "1000 W", "2000 W", "200 W"],
+    ans: 2,
+    section: "Physics"
+  },
+
+  {
+    q: "In an elastic collision between two objects of equal mass where one is initially at rest, after the collision:",
+    opts: [
+      "Both objects move with half the initial velocity",
+      "The moving object stops and the stationary object moves with the initial velocity",
+      "Both objects move in opposite directions",
+      "The moving object continues with same velocity"
+    ],
+    ans: 1,
+    section: "Physics"
+  },
+
+  // ─────────────────────────────────────────
+  // 📌 TOPIC 4: Electronics (4 MCQs)
+  // ─────────────────────────────────────────
+
+  {
+    q: "In a p-n junction diode under forward bias, the width of the depletion region:",
+    opts: [
+      "Increases",
+      "Decreases",
+      "Remains unchanged",
+      "First increases then decreases"
+    ],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "Which logic gate gives output 1 only when ALL inputs are 0?",
+    opts: ["AND", "OR", "NOR", "NAND"],
+    ans: 2,
+    section: "Physics"
+  },
+
+  {
+    q: "In a transistor used as an amplifier, which configuration gives the highest power gain?",
+    opts: [
+      "Common Base",
+      "Common Emitter",
+      "Common Collector",
+      "All give equal gain"
+    ],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "The output of a NAND gate is connected to both inputs of another NAND gate. The resulting gate behaves as:",
+    opts: ["AND gate", "OR gate", "NOT gate", "NOR gate"],
+    ans: 2,
+    section: "Physics"
+  },
+
+  // ─────────────────────────────────────────
+  // 📌 TOPIC 5: Rotational and Circular Motion (4 MCQs)
+  // ─────────────────────────────────────────
+
+  {
+    q: "A body moves in a circle of radius 2 m with a speed of 4 m/s. Its centripetal acceleration is:",
+    opts: ["4 m/s²", "8 m/s²", "2 m/s²", "16 m/s²"],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "The moment of inertia of a solid disc of mass M and radius R about its central axis is:",
+    opts: ["MR²", "½MR²", "¼MR²", "⅔MR²"],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "A satellite orbits Earth in a circular orbit. If its orbital radius is doubled, its orbital speed becomes:",
+    opts: [
+      "Doubled",
+      "Halved",
+      "Reduced by factor of √2",
+      "Increased by factor of √2"
+    ],
+    ans: 2,
+    section: "Physics"
+  },
+
+  {
+    q: "The angular momentum of a system is conserved when:",
+    opts: [
+      "Net torque acting on the system is zero",
+      "Net force acting on the system is zero",
+      "Net linear momentum is zero",
+      "The system is in translational equilibrium"
+    ],
+    ans: 0,
+    section: "Physics"
+  },
+
+  // ─────────────────────────────────────────
+  // 📌 TOPIC 6: Current Electricity (5 MCQs)
+  // ─────────────────────────────────────────
+
+  {
+    q: "Three resistors of 3Ω, 6Ω, and 9Ω are connected in parallel. The equivalent resistance of the combination is:",
+    opts: ["18 Ω", "1.64 Ω", "6 Ω", "0.61 Ω"],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "A wire of resistance R is stretched to double its original length. Its new resistance becomes:",
+    opts: ["R/2", "2R", "4R", "R/4"],
+    ans: 2,
+    section: "Physics"
+  },
+
+  {
+    q: "In a Wheatstone bridge, the bridge is said to be balanced when:",
+    opts: [
+      "P/Q = R/S",
+      "P + Q = R + S",
+      "P × Q = R × S",
+      "P - Q = R - S"
+    ],
+    ans: 0,
+    section: "Physics"
+  },
+
+  {
+    q: "The internal resistance of a battery is 0.5 Ω and its EMF is 12 V. When a current of 4 A flows, the terminal voltage is:",
+    opts: ["10 V", "12 V", "14 V", "6 V"],
+    ans: 0,
+    section: "Physics"
+  },
+
+  {
+    q: "Which of the following correctly states Kirchhoff's Current Law (KCL)?",
+    opts: [
+      "Sum of all voltages in a loop is zero",
+      "Sum of currents entering a junction equals sum of currents leaving it",
+      "Current is same in all branches of a parallel circuit",
+      "Voltage drop across each resistor in series is equal"
+    ],
+    ans: 1,
+    section: "Physics"
+  },
+
+  // ─────────────────────────────────────────
+  // 📌 TOPIC 7: Atomic Spectra (4 MCQs)
+  // ─────────────────────────────────────────
+
+  {
+    q: "The spectral line in the hydrogen spectrum that falls in the visible region belongs to which series?",
+    opts: ["Lyman series", "Paschen series", "Balmer series", "Brackett series"],
+    ans: 2,
+    section: "Physics"
+  },
+
+  {
+    q: "According to Bohr's model, an electron transitions from n=4 to n=2. The emitted photon belongs to which series?",
+    opts: ["Lyman", "Balmer", "Paschen", "Brackett"],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "X-rays are produced when high-speed electrons:",
+    opts: [
+      "Pass through a magnetic field",
+      "Collide with a metal target and decelerate rapidly",
+      "Are emitted from a radioactive nucleus",
+      "Pass through a diffraction grating"
+    ],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "The energy of a photon is 3.4 eV. Its wavelength in nm is approximately: (h = 6.63×10⁻³⁴ Js, c = 3×10⁸ m/s, 1eV = 1.6×10⁻¹⁹ J)",
+    opts: ["365 nm", "550 nm", "780 nm", "254 nm"],
+    ans: 0,
+    section: "Physics"
+  },
+
+  // ─────────────────────────────────────────
+  // 📌 TOPIC 8: Electrostatics (5 MCQs)
+  // ─────────────────────────────────────────
+
+  {
+    q: "Two point charges of +4μC and +9μC are placed 1 m apart. At what point between them is the electric field zero?",
+    opts: [
+      "0.4 m from the +4μC charge",
+      "0.6 m from the +4μC charge",
+      "0.5 m from each charge",
+      "0.4 m from the +9μC charge"
+    ],
+    ans: 0,
+    section: "Physics"
+  },
+
+  {
+    q: "The capacitance of a parallel plate capacitor is doubled if:",
+    opts: [
+      "The distance between plates is doubled",
+      "The area of plates is halved",
+      "A dielectric of constant K=2 is inserted",
+      "The voltage across it is doubled"
+    ],
+    ans: 2,
+    section: "Physics"
+  },
+
+  {
+    q: "The electric potential at a point due to a point charge Q at distance r is V. If the distance is tripled, the new potential is:",
+    opts: ["3V", "V/3", "V/9", "9V"],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "Gauss's Law relates the electric flux through a closed surface to:",
+    opts: [
+      "The total charge outside the surface",
+      "The total enclosed charge divided by permittivity ε₀",
+      "The electric field at the surface only",
+      "The surface area of the closed surface"
+    ],
+    ans: 1,
+    section: "Physics"
+  },
+
+  {
+    q: "Three capacitors of 2μF, 3μF, and 6μF are connected in series. The equivalent capacitance is:",
+    opts: ["11 μF", "1 μF", "0.5 μF", "3 μF"],
+    ans: 1,
+    section: "Physics"
+  },
+
+  // ── ENGLISH ───────────────────────────────────────────────
+    // 🔹 Vocabulary in Context (3 MCQs)
+
+  {
+    q: "The scientist's 'seminal' work on genetics revolutionized modern biology. The word 'seminal' most closely means:",
+    opts: [
+      "Outdated and irrelevant",
+      "Highly influential and original",
+      "Controversial and debated",
+      "Technically complex"
+    ],
+    ans: 1,
+    section: "English"
+  },
+
+  {
+    q: "Despite his 'garrulous' nature in social settings, he became surprisingly reticent during the interview. 'Garrulous' means:",
+    opts: [
+      "Shy and withdrawn",
+      "Aggressive and rude",
+      "Excessively talkative",
+      "Calm and composed"
+    ],
+    ans: 2,
+    section: "English"
+  },
+
+  {
+    q: "The new policy was seen as 'inimical' to the interests of small businesses. 'Inimical' most nearly means:",
+    opts: [
+      "Beneficial",
+      "Neutral",
+      "Harmful and hostile",
+      "Indifferent"
+    ],
+    ans: 2,
+    section: "English"
+  },
+
+  // 🔹 Grammar & Sentence Structure (3 MCQs)
+
+  {
+    q: "Choose the sentence that is grammatically CORRECT:",
+    opts: [
+      "Neither the students nor the teacher were present.",
+      "Neither the students nor the teacher was present.",
+      "Neither the students nor the teacher are present.",
+      "Neither the students nor the teacher have been present."
+    ],
+    ans: 1,
+    section: "English"
+  },
+
+  {
+    q: "Identify the CORRECT use of the subjunctive mood:",
+    opts: [
+      "If he was here, he would help us.",
+      "If he is here, he would help us.",
+      "If he were here, he would help us.",
+      "If he has been here, he would help us."
+    ],
+    ans: 2,
+    section: "English"
+  },
+
+  {
+    q: "Select the option that correctly fills the blank: The committee _______ yet to reach a consensus on the proposed amendment.",
+    opts: [
+      "is",
+      "are",
+      "were",
+      "have been"
+    ],
+    ans: 0,
+    section: "English"
+  },
+
+  // 🔹 Analogies (3 MCQs) — Classic KIPS Pattern
+
+  {
+    q: "PATHOLOGIST : DISEASE :: SEISMOLOGIST : ?",
+    opts: [
+      "Weather",
+      "Earthquakes",
+      "Ocean currents",
+      "Fossils"
+    ],
+    ans: 1,
+    section: "English"
+  },
+
+  {
+    q: "MENDACIOUS : TRUTH :: PARSIMONIOUS : ?",
+    opts: [
+      "Wealth",
+      "Generosity",
+      "Poverty",
+      "Honesty"
+    ],
+    ans: 1,
+    section: "English"
+  },
+
+  {
+    q: "EPHEMERAL : PERMANENCE :: TORPID : ?",
+    opts: [
+      "Laziness",
+      "Coldness",
+      "Alertness",
+      "Slowness"
+    ],
+    ans: 2,
+    section: "English"
+  },
+
+
+  // ── LOGICAL REASONING ─────────────────────────────────────
+   // 🔹 Critical Reasoning (3 MCQs)
+
+  {
+    q: "All doctors are intelligent. Some intelligent people are artists. Which conclusion MUST be true?",
+    opts: [
+      "All doctors are artists",
+      "Some doctors are artists",
+      "Some artists are intelligent",
+      "No doctors are artists"
+    ],
+    ans: 2,
+    section: "Logical Reasoning"
+  },
+
+  {
+    q: "Statement: 'Regular exercise reduces the risk of heart disease.' Which of the following, if true, would most WEAKEN this argument?",
+    opts: [
+      "Many athletes develop heart disease despite regular exercise",
+      "Heart disease is also influenced by diet",
+      "Exercise improves lung capacity",
+      "Some people cannot exercise due to physical disabilities"
+    ],
+    ans: 0,
+    section: "Logical Reasoning"
+  },
+
+  {
+    q: "If all Blips are Blops, and no Blops are Blings, which must be TRUE?",
+    opts: [
+      "Some Blips are Blings",
+      "All Blings are Blops",
+      "No Blips are Blings",
+      "Some Blops are Blips"
+    ],
+    ans: 2,
+    section: "Logical Reasoning"
+  },
+
+  // 🔹 Number & Letter Series (3 MCQs)
+
+  {
+    q: "Find the MISSING number in the series: 2, 6, 12, 20, 30, ?",
+    opts: ["40", "42", "44", "36"],
+    ans: 1,
+    section: "Logical Reasoning"
+  },
+
+  {
+    q: "Find the MISSING term: AZ, BY, CX, DW, ?",
+    opts: ["EV", "FV", "EU", "FU"],
+    ans: 0,
+    section: "Logical Reasoning"
+  },
+
+  {
+    q: "What comes next in the series: 1, 4, 9, 16, 25, 36, ?",
+    opts: ["42", "45", "49", "48"],
+    ans: 2,
+    section: "Logical Reasoning"
+  },
+
+  // 🔹 Data Sufficiency & Analytical (3 MCQs)
+
+  {
+    q: "A is taller than B. C is shorter than A but taller than B. D is taller than C. Who is the SHORTEST?",
+    opts: ["A", "B", "C", "D"],
+    ans: 1,
+    section: "Logical Reasoning"
+  },
+
+  {
+    q: "A shopkeeper marks an item 40% above cost price and then gives a 20% discount. What is his actual profit percentage?",
+    opts: ["20%", "16%", "12%", "8%"],
+    ans: 2,
+    section: "Logical Reasoning"
+  },
+
+  {
+    q: "If 'DOCTOR' is coded as 'FQEVQT', then 'PATIENT' is coded as:",
+    opts: ["RCVKGPV", "QBUJFOU", "RCUKGPV", "RBVKGPV"],
+    ans: 0,
+    section: "Logical Reasoning"
+  }
+
+  // ══════════════════════════════════════════════════════════
+  //  👆  REPLACE / EXTEND the questions above with your
+  //  own MCQs to fill all 180 slots.
+  //  Copy-paste the format:
+  //
+  //  {
+  //    q: "Your question text?",
+  //    opts: ["A", "B", "C", "D"],
+  //    ans: 0,            ← 0/1/2/3 for A/B/C/D
+  //    section: "Biology" ← Biology | Chemistry | Physics | English | Logical Reasoning
+  //  },
+  // ══════════════════════════════════════════════════════════
+
+]; // ← end of questions array
+
+
+// ══════════════════════════════════════════════════════════
+//  ENGINE — DO NOT EDIT BELOW UNLESS YOU KNOW WHAT YOU'RE DOING
+// ══════════════════════════════════════════════════════════
+
+document.getElementById('totalQCount').textContent = questions.length;
+
+let currentIndex = 0;
+let answers    = new Array(questions.length).fill(null); // null = unanswered
+let markedSet  = new Set();
+let timerInterval;
+let timeLeft   = 3 * 60 * 60; // 3 hours in seconds
+let studentName = '';
+let testSubmitted = false;
+
+// ─── START ───────────────────────────────────────────────
+function startTest() {
+  studentName = document.getElementById('studentName').value.trim() || 'Student';
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('testScreen').style.display  = 'block';
+  buildNavGrid();
+  loadQuestion(0);
+  startTimer();
+}
+
+// ─── TIMER ───────────────────────────────────────────────
+function startTimer() {
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      submitTest(true);
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const h = Math.floor(timeLeft / 3600);
+  const m = Math.floor((timeLeft % 3600) / 60);
+  const s = timeLeft % 60;
+  const el = document.getElementById('timerDisplay');
+  el.textContent = `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className = '';
+  if (timeLeft <= 300) el.classList.add('critical');
+  else if (timeLeft <= 900) el.classList.add('warning');
+}
+
+// ─── NAVIGATION GRID ─────────────────────────────────────
+function buildNavGrid() {
+  const container = document.getElementById('navGridContainer');
+  container.innerHTML = '';
+
+  const sections = [...new Set(questions.map(q => q.section))];
+
+  sections.forEach(sec => {
+    const secIdxs = questions.map((q,i)=> q.section===sec ? i : -1).filter(i=>i>=0);
+
+    const lbl = document.createElement('div');
+    lbl.className = 'nav-section-label';
+    lbl.textContent = sec;
+    container.appendChild(lbl);
+
+    const grid = document.createElement('div');
+    grid.className = 'nav-grid';
+
+    secIdxs.forEach(i => {
+      const btn = document.createElement('button');
+      btn.className = 'nav-btn';
+      btn.id = `nb-${i}`;
+      btn.textContent = i + 1;
+      btn.onclick = () => loadQuestion(i);
+      grid.appendChild(btn);
+    });
+
+    container.appendChild(grid);
+  });
+}
+
+function updateNavBtn(i) {
+  const btn = document.getElementById(`nb-${i}`);
+  if (!btn) return;
+  btn.className = 'nav-btn';
+  if (i === currentIndex)  btn.classList.add('current');
+  if (answers[i] !== null) btn.classList.add('answered');
+  if (markedSet.has(i))    btn.classList.add('marked');
+}
+
+function updateAllNav() {
+  for (let i = 0; i < questions.length; i++) updateNavBtn(i);
+  document.getElementById('statAnswered').textContent  = answers.filter(a => a !== null).length;
+  document.getElementById('statMarked').textContent    = markedSet.size;
+  document.getElementById('statRemaining').textContent = answers.filter(a => a === null).length;
+}
+
+// ─── QUESTION RENDERER ───────────────────────────────────
+function loadQuestion(index) {
+  const prev = currentIndex;
+  currentIndex = index;
+  updateNavBtn(prev);
+
+  const q = questions[index];
+
+  document.getElementById('sectionTag').textContent = q.section;
+  document.getElementById('qNumLabel').textContent  = `Question ${index + 1} of ${questions.length}`;
+  document.getElementById('questionCounter').textContent = `Q ${index + 1} / ${questions.length}`;
+  document.getElementById('questionText').textContent = q.q;
+
+  // Options
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  const labels = ['A', 'B', 'C', 'D'];
+
+  q.opts.forEach((opt, oi) => {
+    const item = document.createElement('label');
+    item.className = 'option-item' + (answers[index] === oi ? ' selected' : '');
+    item.innerHTML = `
+      <input type="radio" name="opt" value="${oi}" ${answers[index] === oi ? 'checked' : ''}>
+      <span class="option-label">${labels[oi]}</span>
+      <span class="option-text">${opt}</span>
+    `;
+    item.addEventListener('click', () => selectAnswer(index, oi));
+    list.appendChild(item);
+  });
+
+  // Prev / Next buttons
+  document.getElementById('btnPrev').disabled = (index === 0);
+  const nextBtn = document.getElementById('btnNext');
+  if (index === questions.length - 1) {
+    nextBtn.textContent = 'Submit Test';
+    nextBtn.onclick = confirmSubmit;
+  } else {
+    nextBtn.textContent = 'Next →';
+    nextBtn.onclick = () => navigate(1);
+  }
+
+  // Mark button
+  const markBtn = document.getElementById('btnMark');
+  markBtn.textContent = markedSet.has(index) ? '★ Marked' : '☆ Mark for Review';
+  markBtn.classList.toggle('active', markedSet.has(index));
+
+  updateNavBtn(index);
+  updateAllNav();
+}
+
+// ─── SELECT ANSWER ────────────────────────────────────────
+function selectAnswer(qIndex, optIndex) {
+  answers[qIndex] = optIndex;
+  // Re-render options to update selected state
+  const items = document.querySelectorAll('.option-item');
+  items.forEach((item, i) => {
+    item.classList.toggle('selected', i === optIndex);
+  });
+  updateNavBtn(qIndex);
+  updateAllNav();
+}
+
+// ─── NAVIGATE ────────────────────────────────────────────
+function navigate(dir) {
+  const next = currentIndex + dir;
+  if (next >= 0 && next < questions.length) loadQuestion(next);
+}
+
+// ─── MARK FOR REVIEW ─────────────────────────────────────
+function toggleMark() {
+  if (markedSet.has(currentIndex)) markedSet.delete(currentIndex);
+  else markedSet.add(currentIndex);
+  const markBtn = document.getElementById('btnMark');
+  markBtn.textContent = markedSet.has(currentIndex) ? '★ Marked' : '☆ Mark for Review';
+  markBtn.classList.toggle('active', markedSet.has(currentIndex));
+  updateNavBtn(currentIndex);
+  updateAllNav();
+}
+
+// ─── SUBMIT ──────────────────────────────────────────────
+function confirmSubmit() {
+  const unanswered = answers.filter(a => a === null).length;
+  document.getElementById('modalText').textContent =
+    unanswered > 0
+      ? `You have ${unanswered} unanswered question(s). Are you sure you want to submit?`
+      : `All questions answered. Ready to submit?`;
+  document.getElementById('submitModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('submitModal').classList.remove('active');
+}
+
+function submitTest(autoSubmit = false) {
+  if (testSubmitted) return;
+  testSubmitted = true;
+  clearInterval(timerInterval);
+  closeModal();
+  showResults();
+}
+
+// ─── RESULTS ─────────────────────────────────────────────
+function showResults() {
+  document.getElementById('testScreen').style.display    = 'none';
+  document.getElementById('resultsScreen').style.display = 'block';
+
+  let correct = 0, wrong = 0, skipped = 0;
+  const sectionData = {};
+
+  questions.forEach((q, i) => {
+    const sec = q.section;
+    if (!sectionData[sec]) sectionData[sec] = { correct: 0, total: 0 };
+    sectionData[sec].total++;
+
+    if (answers[i] === null) {
+      skipped++;
+    } else if (answers[i] === q.ans) {
+      correct++;
+      sectionData[sec].correct++;
+    } else {
+      wrong++;
+    }
+  });
+
+  const pct = Math.round((correct / questions.length) * 100);
+
+  document.getElementById('resultsStudentName').textContent = `${studentName} · Completed`;
+  document.getElementById('finalScore').textContent = correct;
+  document.getElementById('resCorrect').textContent = correct;
+  document.getElementById('resWrong').textContent   = wrong;
+  document.getElementById('resSkipped').textContent = skipped;
+  document.getElementById('resPercent').textContent = pct + '%';
+
+  // Section breakdown
+  const breakGrid = document.getElementById('breakdownGrid');
+  breakGrid.innerHTML = '';
+  Object.entries(sectionData).forEach(([sec, d]) => {
+    const fillPct = Math.round((d.correct / d.total) * 100);
+    breakGrid.innerHTML += `
+      <div class="breakdown-item">
+        <div class="bi-section">${sec}</div>
+        <div class="bi-score">${d.correct}</div>
+        <div class="bi-total">out of ${d.total}</div>
+        <div class="bi-bar"><div class="bi-fill" style="width:${fillPct}%"></div></div>
+      </div>`;
+  });
+
+  // Full review
+  const labels = ['A', 'B', 'C', 'D'];
+  const reviewDiv = document.getElementById('reviewContainer');
+  reviewDiv.innerHTML = '';
+
+  questions.forEach((q, i) => {
+    const userAns = answers[i];
+    const isCorrect = userAns === q.ans;
+    const isSkipped = userAns === null;
+    const statusCls = isSkipped ? 'skipped' : (isCorrect ? 'correct' : 'wrong');
+    const statusTxt = isSkipped ? '⬜ Skipped' : (isCorrect ? '✅ Correct' : '❌ Wrong');
+
+    const opts = q.opts.map((o, oi) => {
+      let cls = '';
+      if (oi === q.ans) cls = 'correct-ans';
+      else if (oi === userAns && !isCorrect) cls = 'wrong-ans';
+      return `<div class="rq-opt ${cls}">
+        <span class="rq-opt-lbl">${labels[oi]}.</span>
+        <span>${o}</span>
+      </div>`;
+    }).join('');
+
+    reviewDiv.innerHTML += `
+      <div class="review-q">
+        <div class="rq-top">
+          <span class="rq-num">Q${i + 1}</span>
+          <span class="rq-section-tag">${q.section}</span>
+          <span class="rq-status ${statusCls}">${statusTxt}</span>
+        </div>
+        <div class="rq-text">${q.q}</div>
+        <div class="rq-options">${opts}</div>
+      </div>`;
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
